@@ -1,0 +1,25 @@
+<h1>Sign up for New User</h1>
+
+
+<%= render 'form' %>
+
+<%= form_for :user ,url: users_path do |f| %>
+    <p>
+    <%= f.label :username %> <br/>
+    <%= f.text_field :username %>
+    </p>
+    <p>
+    <%= f.label :email %> <br/>
+    <%= f.email_field :email%>
+    </p>
+    <p>
+    <%= f.label :password %> <br/>
+    <%= f.password_field :password%>
+    </p>
+    <p>
+    <%= f.submit %>
+    </p>
+    <% end %>
+
+
+    <p><%= link_to 'Return to List of articles' ,articles_path %></p>
