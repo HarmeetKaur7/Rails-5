@@ -19,6 +19,7 @@ before_action :find_article, only: [:show,:edit,:update,:destroy]
 
     def create
         @article= Article.new(params_article)
+        @article.user=User.first
         if @article.save
             flash[:notice]="Article was successfully saved !"
             redirect_to article_path(@article)   #show page
