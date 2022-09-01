@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
 
     before_action :find_user ,only: [:show,:edit,:update]
+
+    def index
+        @users=User.all
+    end
+
     def new
         @user=User.new
     end
@@ -17,7 +22,7 @@ class UsersController < ApplicationController
         @user=User.new(params_user)
         if @user.save
             flash[:notice] = "Welcome #{@user.username}, You have successfully signedup !"
-            redirect_to articles_path
+            redirect_to users_path
         else
             render 'new'   
         end 
@@ -26,7 +31,7 @@ class UsersController < ApplicationController
     def update
         if @user.update(params_user)
             flash[:notice] = "Hi #{@user.username}, Your account has been updated !"
-            redirect_to articles_path
+            redirect_to user_path(@user)
         else
             render 'edit'
         end
