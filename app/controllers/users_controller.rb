@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     def create
         @user=User.new(params_user)
         if @user.save
+            session[:user_id]=@user.id
             flash[:notice] = "Welcome #{@user.username}, You have successfully signedup !"
             redirect_to users_path
         else

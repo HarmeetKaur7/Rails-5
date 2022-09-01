@@ -1,6 +1,14 @@
-<h1>List of Articles</h1>
+<h1>BLOG</h1>
+
+<% if logged_in? %>
+<p><%=link_to 'log out' , login_path, method: :delete%></p>
+<% else %>
+<p><%= link_to 'Log in' , login_path%> </p> 
 <p><%= link_to 'Sign Up' , signup_path%> </p> 
+<% end %>
 <br>
+<% if logged_in? %>
+<h1>List of Articles</h1>
 <table>
   <thead>
     <tr>
@@ -26,3 +34,4 @@
 <p>
 <td><%=link_to 'New article', new_article_path%></td> 
 </p>
+<% end %>

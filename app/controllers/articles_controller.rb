@@ -21,8 +21,8 @@ before_action :find_article, only: [:show,:edit,:update,:destroy]
 
     def create
         @article= Article.new(params_article)
-        @article.user=User.first
-        if @article.save
+        @article.user=current_user    #from helper methods in appcontroller
+        if @article.save              #so that articles are saved by logged in user and not hardcoded
             flash[:notice]="Article was successfully saved !"
             redirect_to article_path(@article)   #show page
         else
