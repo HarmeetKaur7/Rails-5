@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
     before_action :find_user ,only: [:show,:edit,:update]
+    before_action :require_user, except: [:show,:index]  #order matters here
+   before_action :require_same_user, only: [:edit,:update] # checking logged in user and then same user condition
 
     def index
         @users=User.all
@@ -46,4 +48,11 @@ class UsersController < ApplicationController
         params.require(:user).permit(:username,:email,:password)
     end
 
+
+    def require_same_user
+        if current_user!=@user
+            flash[:alert]="You can only edit your account" 
+            redirect_to user_path(@user)
+        end
+    end
 end
