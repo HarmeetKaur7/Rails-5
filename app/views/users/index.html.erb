@@ -14,6 +14,9 @@
     <td><%= user.username%></td>
     <td><%= pluralize(user.articles.count,"article")%></td>
     <td><%=link_to 'user profile', user_path(user)%></td>
+    <% if logged_in? && user==current_user %>
+    <td><%=link_to 'edit profile', edit_user_path(user)%></td>
+    <% end %>
    </tr>
     <% end %>
   </tbody>
