@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
 before_action :find_article, only: [:show,:edit,:update,:destroy]
+before_action :require_user, except: [:show,:index]  #order matters here
+before_action :require_same_user, onlyt: [:edit,:update] # checking logged in user and then same user condition
     def show
         # @article=Article.find(params[:id])
     end
@@ -59,4 +61,10 @@ before_action :find_article, only: [:show,:edit,:update,:destroy]
         params.require(:article).permit(:title,:description)
     end
 
+    def require_same_user
+        if current_user!=@article.user
+            flash[:alert]="You can only edit your articles" 
+            redirect_to article_path(@article)
+        end
+    end
 end
