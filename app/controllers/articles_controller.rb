@@ -16,6 +16,8 @@ before_action :find_article, only: [:show,:edit,:update,:destroy]
     def edit 
         # @article=Article.find(params[:id])
     end
+   
+       #Article.update_all(user_id: User.first.id)
 
     def create
         @article= Article.new(params_article)
