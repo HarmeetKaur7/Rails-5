@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
     before_action :find_user ,only: [:show,:edit,:update]
-    before_action :require_user, except: [:show,:index]  #order matters here
+    before_action :require_user, except: [:show,:index,:new,:create]  #order matters here
    before_action :require_same_user, only: [:edit,:update] # checking logged in user and then same user condition
 
     def index

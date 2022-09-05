@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
 before_action :find_article, only: [:show,:edit,:update,:destroy]
-before_action :require_user, except: [:show,:index]  #order matters here
+before_action :require_user, except: [:show,:index,:new,:create]  #order matters here
 before_action :require_same_user, only: [:edit,:update,:destroy] # checking logged in user and then same user condition
     def show
         # @article=Article.find(params[:id])
