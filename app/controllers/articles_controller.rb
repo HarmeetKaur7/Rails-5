@@ -25,7 +25,7 @@ before_action :require_same_user, only: [:edit,:update,:destroy] # checking logg
         @article= Article.new(params_article)
         @article.user=current_user    #from helper methods in appcontroller
         if @article.save              #so that articles are saved by logged in user and not hardcoded
-            # SendingArticlesToUsersJob.perform_now(@article)
+            SendingArticlesToUsersJob.perform_now(@article)
             
             flash[:notice]="Article was successfully saved !"
             redirect_to article_path(@article)   #show page
