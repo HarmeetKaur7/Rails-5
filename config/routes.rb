@@ -7,4 +7,8 @@ Rails.application.routes.draw do
   get 'login', to: "sessions#new"
   post 'login', to: "sessions#create"
   delete 'login', to: "sessions#destroy"
+  require 'sidekiq/web'
+
+  mount Sidekiq::Web => '/sidekiq' #to display dashboard on the web 
 end
+
