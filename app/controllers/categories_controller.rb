@@ -27,7 +27,7 @@ class CategoriesController < ApplicationController
         flash[:notice]= "Category was successfully saved"
         redirect_to @category
       else
-      render new
+      render 'new'
       end
     end
 
