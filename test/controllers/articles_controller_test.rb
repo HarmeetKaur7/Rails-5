@@ -1,39 +1,42 @@
 # require 'test_helper'
 
-class ArticlesControllerTest < ActiveJob::TestCase                 #ActionDispatch::IntegrationTest
+class ArticlesControllerTest < ActionDispatch::IntegrationTest                #ActiveJob::TestCase 
 
 
- test "job" do
-  @article= Article.new(id: 1,title: "TITLE 1",description: "DESCRIPTION OF ARTICLE 1")
-  @article.save
-  assert_enqueued_jobs 1 do
-  SendingArticlesToUsersJob.perform_later(@article)
+#  test "job" do
+#   @article= Article.new(id: 1,title: "TITLE 1",description: "DESCRIPTION OF ARTICLE 1")
+#   @article.save
+#   assert_enqueued_jobs 1 do
+#   SendingArticlesToUsersJob.perform_later(@article)
+#   end
+#   # assert @article.reload.create?
+#  end
+
+
+#  test "job2" do
+#   @article= Article.new(id: 1,title: "TITLE 1",description: "DESCRIPTION OF ARTICLE 1")
+#   @article.save
+
+#   assert_enqueued_with(job: SendingArticlesToUsersJob ,args: [@article],at:  Date.tomorrow.noon) do
+#     SendingArticlesToUsersJob.set(wait_until: Date.tomorrow.noon).perform_later(@article)
+#   end
+#   # assert @article.reload.create?
+#  end
+
+ test "invite" do
+  assert_difference 'ActionMailer::Base.deliveries.count' ,+1 do
+    UserMailer.invite.deliver_now
+    # post :invite, params: {email: 'hamu20017@gmail.com'}
   end
-  # assert @article.reload.create?
- end
 
-
- test "job2" do
-  @article= Article.new(id: 1,title: "TITLE 1",description: "DESCRIPTION OF ARTICLE 1")
-  @article.save
-
-  assert_enqueued_with(job: SendingArticlesToUsersJob ,args: [@article],at:  Date.tomorrow.noon) do
-    SendingArticlesToUsersJob.set(wait_until: Date.tomorrow.noon).perform_later(@article)
-  end
-  # assert @article.reload.create?
+  email=ActionMailer::Base.deliveries.last
+  assert_equal 'invitation',email.subject
+  assert_match(/Just checking invitations/, email.body.to_s)
  end
 
 end
 
-# test "invite" do
-#   assert_difference 'ActionMailer::Base.deliveries.count' ,+1 do
-#     post :invite, params: {email: 'hamu20017@gmail.com'}
-#   end
 
-#   email=ActionMailer::Base.deliveries.last
-#   assert_equal 'invitation',email.subject
-#   assert_match(/Just checking invitations/, email.body.to_s)
-#  end
 
   # setup do
   #   @article = articles(:one)
