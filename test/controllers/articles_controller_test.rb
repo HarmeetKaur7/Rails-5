@@ -11,6 +11,20 @@ class ArticlesControllerTest < ActiveJob::TestCase                 #ActionDispat
   end
   # assert @article.reload.create?
  end
+
+
+ test "job2" do
+  @article= Article.new(id: 1,title: "TITLE 1",description: "DESCRIPTION OF ARTICLE 1")
+  @article.save
+
+  assert_enqueued_with(job: SendingArticlesToUsersJob ,args: [@article],at:  Date.tomorrow.noon) do
+    SendingArticlesToUsersJob.set(wait_until: Date.tomorrow.noon).perform_later(@article)
+  end
+  # assert @article.reload.create?
+ end
+
+end
+
 # test "invite" do
 #   assert_difference 'ActionMailer::Base.deliveries.count' ,+1 do
 #     post :invite, params: {email: 'hamu20017@gmail.com'}
@@ -20,9 +34,6 @@ class ArticlesControllerTest < ActiveJob::TestCase                 #ActionDispat
 #   assert_equal 'invitation',email.subject
 #   assert_match(/Just checking invitations/, email.body.to_s)
 #  end
-end
-
-
 
   # setup do
   #   @article = articles(:one)
