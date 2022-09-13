@@ -25,6 +25,7 @@ before_action :require_same_user, only: [:edit,:update,:destroy] # checking logg
         @article= Article.new(params_article)
         @article.user=current_user    #from helper methods in appcontroller
         if @article.save              #so that articles are saved by logged in user and not hardcoded
+            UserMailer.invite.deliver_later
             SendingArticlesToUsersJob.set(wait: 5.minutes).perform_later(@article)           #set(wait: 5.minutes)
             
             flash[:notice]="Article was successfully saved !"
