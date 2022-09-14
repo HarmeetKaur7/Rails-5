@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  def setup 
     @category = Category.create(name: "sports")     #I used create instead of new because the record must hit the table for actions like show and edit and delete
   end
 
@@ -28,15 +28,15 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should get edit" do
-  #   get edit_category_url(@category)
-  #   assert_response :success
-  # end
+  test "should get edit" do
+    get edit_category_url(@category)
+    assert_response :success
+  end
 
-  # test "should update category" do
-  #   patch category_url(@category), params: { category: {  } }
-  #   assert_redirected_to category_url(@category)
-  # end
+  test "should update category" do
+    patch category_url(@category), params: { category: {name: "Travel"  } }
+    assert_redirected_to category_url(@category)
+  end
 
   # test "should destroy category" do
   #   assert_difference('Category.count', -1) do
