@@ -52,6 +52,11 @@ before_action :require_same_user, only: [:edit,:update,:destroy] # checking logg
         redirect_to articles_path                #index page
     end
 
+
+    def brandnew
+        @articles=Article.newest
+    end
+
     private
     def find_article
         @article=Article.find(params[:id])
